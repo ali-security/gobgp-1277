@@ -5,4 +5,5 @@ fabric<2.0.0
 netaddr
 nsenter
 docker-py
+ovs<2.12.0
 ryu
