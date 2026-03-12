@@ -22,8 +22,15 @@ _node_js: &_node_js
   node_js: "node"
 
 _python: &_python
-  language: python
-  python: "2.7"
+  language: generic
+  before_install:
+    - git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+    - export PYENV_ROOT="$HOME/.pyenv"
+    - export PATH="$PYENV_ROOT/bin:$PATH"
+    - eval "$(pyenv init --path)"
+    - eval "$(pyenv init -)"
+    - pyenv install 2.7.18
+    - pyenv global 2.7.18
 
 _docker: &_docker
   <<: *_python
@@ -31,6 +38,14 @@ _docker: &_docker
   dist: trusty
   group: deprecated-2017Q4
   before_install:
+    - git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+    - export PYENV_ROOT="$HOME/.pyenv"
+    - export PATH="$PYENV_ROOT/bin:$PATH"
+    - eval "$(pyenv init --path)"
+    - eval "$(pyenv init -)"
+    - pyenv install 2.7.18
+    - pyenv global 2.7.18
+    - pip install --upgrade pip
     - test $TRAVIS_OS_NAME == "linux" && sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0
     - test $TRAVIS_OS_NAME == "linux" && sudo sysctl -w net.ipv6.conf.default.disable_ipv6=0
     - test $TRAVIS_OS_NAME == "linux" && sudo sysctl -w net.ipv6.conf.docker0.disable_ipv6=1
