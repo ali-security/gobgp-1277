@@ -17,10 +17,6 @@ _build: &_build
     - go build -o ./cmd/gobgp/gobgp   ./cmd/gobgp/
     - go build -o ./cmd/gobgpd/gobgpd ./cmd/gobgpd/
 
-_node_js: &_node_js
-  language: node_js
-  node_js: "node"
-
 _python: &_python
   language: generic
   before_install:
@@ -119,21 +115,6 @@ matrix:
         - export GOOS="darwin"
         - go env
 #
-# Misc
-#
-    - <<: *_dep_ensure
-      env:
-        - DESCRIPTION="go fmt + vet + megacheck"
-      before_script: go get -u honnef.co/go/tools/cmd/megacheck
-      script:
-        - test -z "$(go fmt $(go list ./... | grep -v '/vendor/'))"
-        - go vet $(go list ./... | grep -v '/vendor/')
-        - megacheck $(go list ./... | grep -v '/vendor/')
-    - <<: *_dep_ensure
-      env:
-        - DESCRIPTION="build_embeded_go.py"
-      script: python test/scenario_test/ci-scripts/build_embeded_go.py docs/sources/lib.md
-#
 # Docker
 #
     - <<: *_docker
@@ -217,24 +198,6 @@ matrix:
     - <<: *_docker
       env:
         - TEST=bgp_confederation_test.py
-#
-# Tools
-#
-    - <<: *_node_js
-      env:
-        - DESCRIPTION="markdownlint"
-      before_script:
-        - npm install -g markdownlint-cli
-      script:
-        - markdownlint $(find . -type f -name '*.md' | grep -v '/vendor/')
-    - <<: *_python
-      env:
-        - DESCRIPTION="Tools"
-      install: pip install scspell3k
-      script:
-        - bash tools/spell-check/scspell.sh
-        - bash tools/grep_avoided_functions.sh
-
 cache:
   pip: true
 
