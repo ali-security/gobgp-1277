@@ -2,7 +2,7 @@ language: go
 
 _dep_ensure: &_dep_ensure
   go: "1.11"
-  before_install: go get -u github.com/golang/dep/cmd/dep
+  before_install: go install github.com/golang/dep/cmd/dep@latest
   install: $GOPATH/bin/dep ensure
 
 _unittest: &_unittest
@@ -59,6 +59,7 @@ env:
     - FROM_IMAGE=osrg/quagga
 
 matrix:
+  fast_finish: false
   allow_failures:
     - go: tip
 
