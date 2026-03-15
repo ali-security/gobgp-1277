@@ -2,7 +2,7 @@ language: go
 
 _dep_ensure: &_dep_ensure
   go: "1.11"
-  install: go mod tidy
+  install: go mod download
 
 _unittest: &_unittest
   <<: *_dep_ensure
