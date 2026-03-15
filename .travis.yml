@@ -2,8 +2,12 @@ language: go
 
 _dep_ensure: &_dep_ensure
   go: "1.11"
-  before_install: GO111MODULE=off go get -u github.com/golang/dep/cmd/dep
-  install: $GOPATH/bin/dep ensure
+  # go_import_path in Travis CI's Go language support used to automatically create this symlink, but newer Travis CI environments no longer reliably do this, so the setup must be explicit.
+  before_install:
+    - mkdir -p $GOPATH/src/github.com/osrg
+    - ln -sf $TRAVIS_BUILD_DIR $GOPATH/src/github.com/osrg/gobgp
+    - GO111MODULE=off go get -u github.com/golang/dep/cmd/dep
+  install: cd $GOPATH/src/github.com/osrg/gobgp && $GOPATH/bin/dep ensure
 
 _unittest: &_unittest
   <<: *_dep_ensure
