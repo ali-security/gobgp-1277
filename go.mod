@@ -22,7 +22,7 @@ require (
 	github.com/pelletier/go-toml v1.0.0
 	github.com/pmezard/go-difflib v1.0.0
 	github.com/satori/go.uuid v1.2.1-0.20180103174451-36e9d2ebbde5
-	github.com/sirupsen/logrus v1.0.2
+	github.com/sirupsen/logrus v1.0.2-0.20170713114250-a3f95b5c4235
 	github.com/spf13/afero v0.0.0-20170217164146-9be650865eab
 	github.com/spf13/cast v1.1.0
 	github.com/spf13/cobra v0.0.0-20170731170427-b26b538f6930
