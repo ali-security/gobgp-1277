@@ -164,7 +164,7 @@ def make_gobgp_ctn(tag='gobgp', local_gobgp_path='', from_image='osrg/quagga'):
 
     c = CmdBuffer()
     c << 'FROM {0}'.format(from_image)
-    c << 'ENV GONOSUMDB=*'
+    c << 'ENV GO111MODULE=on'
     c << 'ADD gobgp /go/src/github.com/osrg/gobgp/'
     c << 'RUN cd /go/src/github.com/osrg/gobgp && go mod download && go install ./cmd/gobgpd ./cmd/gobgp'
 
