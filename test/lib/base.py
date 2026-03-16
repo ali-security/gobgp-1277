@@ -165,17 +165,15 @@ def make_gobgp_ctn(tag='gobgp', local_gobgp_path='', from_image='osrg/quagga'):
     c = CmdBuffer()
     c << 'FROM {0}'.format(from_image)
     c << 'ENV GO111MODULE=on'
-    c << 'ADD gobgp /go/src/github.com/osrg/gobgp/'
+    c << 'ADD . /go/src/github.com/osrg/gobgp/'
     c << 'RUN cd /go/src/github.com/osrg/gobgp && go mod download && go install ./cmd/gobgpd ./cmd/gobgp'
 
-    rindex = local_gobgp_path.rindex('gobgp')
-    if rindex < 0:
+    if 'gobgp' not in local_gobgp_path:
         raise Exception('{0} seems not gobgp dir'.format(local_gobgp_path))
 
-    workdir = local_gobgp_path[:rindex]
-    with lcd(workdir):
+    with lcd(local_gobgp_path):
         local('echo \'{0}\' > Dockerfile'.format(str(c)))
-        local('docker build -t {0} .'.format(tag))
+        local('docker build --progress=plain -t {0} .'.format(tag))
         local('rm Dockerfile')
 
 
